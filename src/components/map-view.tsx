@@ -2,12 +2,15 @@ import { useRef } from "react";
 import Map, { Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import type { Dot, Theme, LayerVisibility } from "../types";
 import { TILE_URLS } from "../constants/map";
+import MapLib from "maplibre-gl";
+import { GlowMarker } from "./glow-marker";
 
 interface Props {
   dots: Dot[];
   theme: Theme;
   layers: LayerVisibility;
   clusteringEnabled: boolean;
+  highlightedId?: number | null;
 }
 
 function dotsToGeoJSON(dots: Dot[]) {
@@ -37,16 +40,26 @@ function tileStyle(theme: Theme) {
   };
 }
 
-export function MapView({ dots, theme, layers, clusteringEnabled }: Props) {
+export function MapView({
+  dots,
+  theme,
+  layers,
+  clusteringEnabled,
+  highlightedId,
+}: Props) {
   const mapRef = useRef<MapRef>(null);
 
   const motorDots = dots.filter((d) => d.type === "motor");
   const homeDots = dots.filter((d) => d.type === "home");
+  const highlightedDot =
+    highlightedId != null
+      ? (dots.find((d) => d.id === highlightedId) ?? null)
+      : null;
 
   return (
     <Map
       ref={mapRef}
-      mapLib={import("maplibre-gl")}
+      mapLib={MapLib}
       mapStyle={tileStyle(theme)}
       initialViewState={{ longitude: 0, latitude: 20, zoom: 2.2 }}
       style={{ width: "100%", height: "100%" }}
@@ -116,7 +129,7 @@ export function MapView({ dots, theme, layers, clusteringEnabled }: Props) {
         />
       </Source>
 
-      {/* Home layer — igual pero con color verde */}
+      {/* Home layer */}
       <Source
         id="home-src"
         type="geojson"
@@ -180,6 +193,15 @@ export function MapView({ dots, theme, layers, clusteringEnabled }: Props) {
           paint={{ "text-color": "#fff" }}
         />
       </Source>
+
+      {/* Glow highlight para el dot recién agregado/reemplazado */}
+      {highlightedDot && (
+        <GlowMarker
+          lng={highlightedDot.lng}
+          lat={highlightedDot.lat}
+          type={highlightedDot.type}
+        />
+      )}
     </Map>
   );
 }

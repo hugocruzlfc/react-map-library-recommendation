@@ -1,14 +1,13 @@
 import { useState } from "react";
-
 import type { Theme, LayerVisibility } from "./types";
+import { BenchmarkModal } from "./components/benchmark-modal";
+import { ControlPanel } from "./components/control-panel";
+import { Legend } from "./components/legend";
+import { MapView } from "./components/map-view";
+import { PerfMonitor } from "./components/perf-monitor";
+import { useBenchmark } from "./hooks/use-benchmark";
 import { useDots } from "./hooks/use-dots";
 import { useFps } from "./hooks/use-fps";
-import { useBenchmark } from "./hooks/use-benchmark";
-import { MapView } from "./components/map-view";
-import { BenchmarkModal } from "./components/benchmark-modal";
-import { PerfMonitor } from "./components/perf-monitor";
-import { Legend } from "./components/legend";
-import { ControlPanel } from "./components/control-panel";
 
 export default function App() {
   const [theme, setTheme] = useState<Theme>("dark");
@@ -19,7 +18,7 @@ export default function App() {
   const [clustering, setClustering] = useState(false);
   const [showBench, setShowBench] = useState(false);
 
-  const { dots, addDot, clearDots, setCount } = useDots(20);
+  const { dots, highlightedId, addDot, clearDots, setCount } = useDots(20);
   const fps = useFps();
   const benchmark = useBenchmark(setCount);
 
@@ -58,6 +57,7 @@ export default function App() {
           theme={theme}
           layers={layers}
           clusteringEnabled={clustering}
+          highlightedId={highlightedId}
         />
         <Legend />
         <PerfMonitor
