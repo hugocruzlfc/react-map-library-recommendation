@@ -1,0 +1,59 @@
+.monitor {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  min-width: 140px;
+  pointer-events: none;
+}
+
+.fpsRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.fpsValue {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.fpsGood {
+  color: var(--color-home);
+}
+
+.fpsWarn {
+  color: var(--color-warn);
+}
+
+.fpsBad {
+  color: var(--color-danger);
+}
+
+.fpsLabel {
+  opacity: 0.5;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0.8;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.statLabel {
+  opacity: 0.6;
+}

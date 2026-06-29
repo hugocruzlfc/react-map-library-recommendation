@@ -1,5 +1,6 @@
 import type { Theme, LayerVisibility } from "../types";
 import { BENCHMARK_STEPS } from "../constants/map";
+import styles from "./control-panel.module.css";
 
 interface Props {
   theme: Theme;
@@ -17,6 +18,10 @@ interface Props {
 
 const STRESS_PRESETS = [50, 200, 500, 1000, 2000];
 
+function cx(...classes: (string | false | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export function ControlPanel({
   theme,
   onThemeChange,
@@ -31,66 +36,53 @@ export function ControlPanel({
   onBenchmark,
 }: Props) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 16,
-        padding: "10px 16px",
-        background: "#12141c",
-        borderBottom: "1px solid #ffffff14",
-        color: "#e8e9ed",
-        fontSize: 13,
-        fontFamily: "system-ui, sans-serif",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className={styles.panel}>
       {/* Theme */}
-      <div style={{ display: "flex", gap: 4 }}>
+      <div className={styles.group}>
         {(["dark", "light"] as Theme[]).map((t) => (
           <button
             key={t}
             onClick={() => onThemeChange(t)}
-            style={btnStyle(theme === t)}
+            className={cx(styles.btn, theme === t && styles.btnActive)}
           >
             {t === "dark" ? "🌙 Dark" : "☀️ Light"}
           </button>
         ))}
       </div>
 
-      <Divider />
+      <div className={styles.divider} />
 
       {/* Layers */}
-      <div style={{ display: "flex", gap: 4 }}>
+      <div className={styles.group}>
         <button
           onClick={() => onToggleLayer("motor")}
-          style={btnStyle(layers.motor)}
+          className={cx(styles.btn, layers.motor && styles.btnActive)}
         >
           🚗 Motor
         </button>
         <button
           onClick={() => onToggleLayer("home")}
-          style={btnStyle(layers.home)}
+          className={cx(styles.btn, layers.home && styles.btnActive)}
         >
           🏠 Home
         </button>
       </div>
 
-      <Divider />
+      <div className={styles.divider} />
 
       {/* Clustering */}
       <button
         onClick={onToggleClustering}
-        style={btnStyle(clustering)}
+        className={cx(styles.btn, clustering && styles.btnActive)}
       >
         🧬 Clustering {clustering ? "ON" : "OFF"}
       </button>
 
-      <Divider />
+      <div className={styles.divider} />
 
       {/* Dot count + stress test */}
-      <span style={{ opacity: 0.7 }}>
-        Dots: <strong style={{ color: "#fff" }}>{dotCount}</strong>
+      <span className={styles.count}>
+        Dots: <strong className={styles.countValue}>{dotCount}</strong>
       </span>
       <select
         value=""
@@ -98,7 +90,7 @@ export function ControlPanel({
           const v = Number(e.target.value);
           if (v) onStress(v);
         }}
-        style={selectStyle}
+        className={styles.select}
       >
         <option value="">Stress test…</option>
         {STRESS_PRESETS.map((n) => (
@@ -113,60 +105,27 @@ export function ControlPanel({
 
       <button
         onClick={onAddDot}
-        style={btnStyle(false)}
+        className={styles.btn}
       >
         + Add dot
       </button>
       <button
         onClick={onClear}
-        style={btnStyle(false)}
+        className={styles.btn}
       >
         🗑 Clear
       </button>
 
-      <Divider />
+      <div className={styles.divider} />
 
       <button
         onClick={onBenchmark}
-        style={{
-          ...btnStyle(false),
-          background: "#4f7eff22",
-          borderColor: "#4f7eff66",
-          fontWeight: 600,
-        }}
+        className={cx(styles.btn, styles.btnBenchmark)}
       >
         📊 Run benchmark
       </button>
 
-      <div style={{ marginLeft: "auto", opacity: 0.4, fontSize: 11 }}>
-        steps: {BENCHMARK_STEPS.join(" · ")}
-      </div>
+      <div className={styles.steps}>steps: {BENCHMARK_STEPS.join(" · ")}</div>
     </div>
   );
 }
-
-function Divider() {
-  return <div style={{ width: 1, height: 20, background: "#ffffff1a" }} />;
-}
-
-function btnStyle(active: boolean): React.CSSProperties {
-  return {
-    padding: "6px 10px",
-    borderRadius: 6,
-    border: `1px solid ${active ? "#4f7eff88" : "#ffffff22"}`,
-    background: active ? "#4f7eff33" : "#ffffff0a",
-    color: active ? "#fff" : "#c5c7cf",
-    cursor: "pointer",
-    fontSize: 13,
-    transition: "all 0.15s ease",
-  };
-}
-
-const selectStyle: React.CSSProperties = {
-  padding: "6px 8px",
-  borderRadius: 6,
-  border: "1px solid #ffffff22",
-  background: "#1a1c25",
-  color: "#e8e9ed",
-  fontSize: 13,
-};

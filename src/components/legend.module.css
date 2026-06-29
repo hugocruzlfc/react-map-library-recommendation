@@ -1,0 +1,37 @@
+.legend {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 120px;
+  pointer-events: none;
+}
+
+.title {
+  font-weight: 600;
+  opacity: 0.6;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}

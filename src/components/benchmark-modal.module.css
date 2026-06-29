@@ -1,0 +1,131 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #000000aa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.modal {
+  background: var(--bg-panel-solid);
+  border: 1px solid #ffffff1a;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 420px;
+  color: var(--text-primary);
+  box-shadow: 0 20px 60px #00000080;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  opacity: 0.6;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.statusLine {
+  margin-bottom: 8px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.progressTrack {
+  height: 6px;
+  background: #ffffff14;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.resultRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resultCount {
+  width: 56px;
+  font-size: 12px;
+  opacity: 0.6;
+  text-align: right;
+}
+
+.barTrack {
+  flex: 1;
+  height: 14px;
+  background: #ffffff0f;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.resultFps {
+  width: 40px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fpsGood {
+  color: var(--color-home);
+}
+
+.fpsWarn {
+  color: var(--color-warn);
+}
+
+.fpsBad {
+  color: var(--color-danger);
+}
+
+.resetBtn {
+  width: 100%;
+  padding: 8px 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-control);
+  background: var(--bg-control);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.resetBtn:hover {
+  border-color: var(--border-active);
+}
